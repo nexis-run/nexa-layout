@@ -1,0 +1,16 @@
+name: layout-demo
+environment: development
+
+logger:
+  name: layout-demo-development
+  stdout: true
+  kafka:
+    - 10.10.10.200:32420
+    - 10.10.10.200:32421
+    - 10.10.10.200:32422
+
+grpc:
+  bind: :50051
+
+http:
+  bind: :50050
