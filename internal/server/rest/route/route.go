@@ -2,10 +2,10 @@ package route
 
 import (
 	"github.com/labstack/echo/v4"
-	"orba.plus/nexa/kit/rest"
+	"nexis.run/nexa/kit/rest"
 
-	"orba.plus/nexa-layout/internal/server/rest/app"
-	"orba.plus/nexa-layout/internal/server/rest/controller"
+	"nexis.run/nexa-layout/internal/server/rest/app"
+	"nexis.run/nexa-layout/internal/server/rest/controller"
 )
 
 func Setup(e *echo.Echo) {

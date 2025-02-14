@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"orba.plus/nexa-layout/internal/bootstrap"
+	"nexis.run/nexa-layout/internal/bootstrap"
 )
 
 var Version = "v1.0.0"

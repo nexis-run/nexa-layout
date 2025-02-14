@@ -1,6 +1,6 @@
 package repository
 
-import "orba.plus/nexa-layout/internal/infrastructure/model"
+import "nexis.run/nexa-layout/internal/infrastructure/model"
 
 type UserRepositoryImpl struct {
 }

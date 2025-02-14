@@ -1,11 +1,11 @@
 package service
 
 import (
-	"orba.plus/nexa/kit"
+	"nexis.run/nexa/kit"
 
-	"orba.plus/nexa-layout/internal/domain/entity"
-	"orba.plus/nexa-layout/internal/infrastructure/model"
-	"orba.plus/nexa-layout/internal/presentation/repository"
+	"nexis.run/nexa-layout/internal/domain/entity"
+	"nexis.run/nexa-layout/internal/infrastructure/model"
+	"nexis.run/nexa-layout/internal/presentation/repository"
 )
 
 type UserServiceImpl struct {

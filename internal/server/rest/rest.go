@@ -3,9 +3,9 @@ package rest
 import (
 	"github.com/labstack/echo/v4"
 	"go.uber.org/zap"
-	"orba.plus/nexa/kit/rest"
+	"nexis.run/nexa/kit/rest"
 
-	"orba.plus/nexa-layout/internal/server/rest/route"
+	"nexis.run/nexa-layout/internal/server/rest/route"
 )
 
 // Setup 初始化Rest服务

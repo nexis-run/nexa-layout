@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package layout.v1;
 
-option go_package = "orba.plus/nexa-layout/pb/layout;layout";
+option go_package = "nexis.run/nexa-layout/pb/layout;layout";
 option java_multiple_files = true;
 option java_package = "pb.layout";
 

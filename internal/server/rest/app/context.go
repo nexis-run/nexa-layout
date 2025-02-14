@@ -2,9 +2,9 @@ package app
 
 import (
 	"github.com/labstack/echo/v4"
-	"orba.plus/nexa/kit/rest"
+	"nexis.run/nexa/kit/rest"
 
-	"orba.plus/nexa-layout/internal/infrastructure/model"
+	"nexis.run/nexa-layout/internal/infrastructure/model"
 )
 
 type LayoutContext struct {

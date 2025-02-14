@@ -1,7 +1,7 @@
 package config
 
 import (
-	"orba.plus/nexa/kit/configure"
+	"nexis.run/nexa/kit/configure"
 )
 
 var (

@@ -1,4 +1,4 @@
-module orba.plus/nexa-layout
+module nexis.run/nexa-layout
 
 go 1.23.0
 
@@ -10,7 +10,7 @@ require (
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.70.0
 	google.golang.org/protobuf v1.36.5
-	orba.plus/nexa v0.0.0-20250212015658-6a02d66528b4
+	nexis.run/nexa v0.0.0-20250213104403-1731d926b906
 )
 
 require (
@@ -57,7 +57,7 @@ require (
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.10.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250207221924-e9438ea467c6 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250207221924-e9438ea467c6 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250212204824-5a70512c5d8b // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250212204824-5a70512c5d8b // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -10,11 +10,11 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/labstack/echo/v4"
 	"go.uber.org/zap"
-	"orba.plus/nexa/kit/graceful"
+	"nexis.run/nexa/kit/graceful"
 
-	"orba.plus/nexa-layout/internal/config"
-	"orba.plus/nexa-layout/internal/server/micro"
-	"orba.plus/nexa-layout/internal/server/rest"
+	"nexis.run/nexa-layout/internal/config"
+	"nexis.run/nexa-layout/internal/server/micro"
+	"nexis.run/nexa-layout/internal/server/rest"
 )
 
 type Server struct {

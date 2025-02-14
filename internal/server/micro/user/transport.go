@@ -7,8 +7,8 @@ package user
 import (
 	"context"
 
-	"orba.plus/nexa-layout/internal/domain/entity"
-	layoutv1 "orba.plus/nexa-layout/pb/gen/layout/v1"
+	"nexis.run/nexa-layout/internal/domain/entity"
+	layoutv1 "nexis.run/nexa-layout/pb/gen/layout/v1"
 )
 
 type GrpcServer struct {

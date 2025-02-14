@@ -3,9 +3,9 @@ package micro
 import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"go.uber.org/zap"
-	"orba.plus/nexa/kit/micro"
+	"nexis.run/nexa/kit/micro"
 
-	"orba.plus/nexa-layout/internal/server/micro/user"
+	"nexis.run/nexa-layout/internal/server/micro/user"
 )
 
 // Setup 初始化微服务

@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"orba.plus/nexa/kit"
-	"orba.plus/nexa/kit/rest"
+	"nexis.run/nexa/kit"
+	"nexis.run/nexa/kit/rest"
 
-	"orba.plus/nexa-layout/internal/presentation/service"
+	"nexis.run/nexa-layout/internal/presentation/service"
 )
 
 func AuthMiddleware() echo.MiddlewareFunc {

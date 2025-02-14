@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"go.uber.org/zap"
-	"orba.plus/nexa/kit/logger"
+	"nexis.run/nexa/kit/logger"
 
-	"orba.plus/nexa-layout/internal/config"
-	"orba.plus/nexa-layout/internal/server"
+	"nexis.run/nexa-layout/internal/config"
+	"nexis.run/nexa-layout/internal/server"
 )
 
 // Boot 初始化项目

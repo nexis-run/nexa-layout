@@ -1,8 +1,8 @@
 package service
 
 import (
-	"orba.plus/nexa-layout/internal/domain/entity"
-	"orba.plus/nexa-layout/internal/infrastructure/model"
+	"nexis.run/nexa-layout/internal/domain/entity"
+	"nexis.run/nexa-layout/internal/infrastructure/model"
 )
 
 // UserService 抽象用户服务

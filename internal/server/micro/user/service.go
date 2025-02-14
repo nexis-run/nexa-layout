@@ -7,8 +7,8 @@ package user
 import (
 	"context"
 
-	"orba.plus/nexa-layout/internal/domain/entity"
-	"orba.plus/nexa-layout/internal/presentation/service"
+	"nexis.run/nexa-layout/internal/domain/entity"
+	"nexis.run/nexa-layout/internal/presentation/service"
 )
 
 type Service struct {

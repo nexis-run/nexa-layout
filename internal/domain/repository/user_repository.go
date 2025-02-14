@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"orba.plus/nexa-layout/internal/infrastructure/model"
+	"nexis.run/nexa-layout/internal/infrastructure/model"
 )
 
 // UserRepository 抽象用户仓库

@@ -3,7 +3,7 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: orba.plus/nexa-layout/pb/gen
+      value: nexis.run/nexa-layout/pb/gen
 
 plugins:
   - remote: buf.build/protocolbuffers/go
