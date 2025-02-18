@@ -47,7 +47,6 @@
 │   │   ├── model                           # 模型目录，包含数据库模型、缓存模型等
 │   │   └── vo                              # 定义值对象，包含常量、属性、错误等
 │   ├── presentation                        # 展现层，主要负责接收请求和返回响应
-│   │   ├── middleware                      # 中间件
 │   │   ├── repository                      # 仓储目录，实现domain层的repository接口
 │   │   └── service                         # 展现服务目录，用户实现domain层的service接口或实现grpc服务，配合repository处理业务逻辑
 │   ├── rest                                # Rest接口层
