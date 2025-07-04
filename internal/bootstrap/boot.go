@@ -29,7 +29,8 @@ func Boot(cfgPath, ver string) {
 	// 初始化日志
 	logger.Setup(cfg.Logger)
 
-	zap.L().Info("Boot successed")
+	// 打印启动信息
+	zap.S().Infof("加载完成, 当前版本号: %s", config.Version)
 
 	// 启动服务器
 	server.Run()
