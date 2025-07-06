@@ -10,7 +10,7 @@ require (
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.73.0
 	google.golang.org/protobuf v1.36.6
-	nexis.run/nexa v0.0.0-20250705015138-626b8c735baa
+	nexis.run/nexa v0.0.0-20250706030403-042b10afadc5
 )
 
 require (

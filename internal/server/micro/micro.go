@@ -9,9 +9,9 @@ import (
 )
 
 // Setup 初始化微服务
-func Setup(name, address string) (server *grpc.Server) {
+func Setup(app, address string) (server *grpc.Server) {
 	var ch chan error
-	server, ch = micro.Run(name, address, func(s *grpc.Server) {
+	server, ch = micro.Run(app, address, func(s *grpc.Server) {
 		user.Register(s)
 	})
 	go func() {

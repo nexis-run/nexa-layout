@@ -9,9 +9,9 @@ import (
 )
 
 // Setup 初始化Rest服务
-func Setup(name, address string) (echoServer *echo.Echo) {
+func Setup(app, address string) (echoServer *echo.Echo) {
 	var ch chan error
-	echoServer, ch = rest.Run(name, address, func(e *echo.Echo) {
+	echoServer, ch = rest.Run(app, address, func(e *echo.Echo) {
 		route.Setup(e)
 	})
 	go func() {

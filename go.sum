@@ -272,3 +272,9 @@ nexis.run/nexa v0.0.0-20250705015009-1e4ee4a4e19d h1:Dz8ZZXjwp5NnwZDvKKuIjT38lSF
 nexis.run/nexa v0.0.0-20250705015009-1e4ee4a4e19d/go.mod h1:X/qBkA7nOSWuH5elPOBxBmvWiYNe048AXoIWRfbLAUQ=
 nexis.run/nexa v0.0.0-20250705015138-626b8c735baa h1:azmUfjdqb3hU8YsEvrXfK3UXmfVOqG7qXlT31tTbIXE=
 nexis.run/nexa v0.0.0-20250705015138-626b8c735baa/go.mod h1:LdJ/fMKwR0+qZmzZV3TTUxwSIcgok155vkqpeUqstlU=
+nexis.run/nexa v0.0.0-20250706025427-984b52880c59 h1:lu5sQhEwvloTnqHoawUUUGji403RxcP8KHn/STrFXpY=
+nexis.run/nexa v0.0.0-20250706025427-984b52880c59/go.mod h1:LdJ/fMKwR0+qZmzZV3TTUxwSIcgok155vkqpeUqstlU=
+nexis.run/nexa v0.0.0-20250706025800-bae3cc9b00de h1:xly3sF0nb3Q7pkjcgOGOD4uKPY51WPswdd+UDfyZxEM=
+nexis.run/nexa v0.0.0-20250706025800-bae3cc9b00de/go.mod h1:LdJ/fMKwR0+qZmzZV3TTUxwSIcgok155vkqpeUqstlU=
+nexis.run/nexa v0.0.0-20250706030403-042b10afadc5 h1:70XrOzpfDIKgO6x3P2XBVjMH0vvLZnBfaTFun5yD1Jo=
+nexis.run/nexa v0.0.0-20250706030403-042b10afadc5/go.mod h1:LdJ/fMKwR0+qZmzZV3TTUxwSIcgok155vkqpeUqstlU=

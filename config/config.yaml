@@ -1,7 +1,8 @@
-appName: layout-demo
+app: layout-demo
 environment: development
 
 logger:
+  name: layout
   stdout: true
   kafka:
     topic: layout-demo-development

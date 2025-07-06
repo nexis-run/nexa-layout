@@ -28,10 +28,10 @@ func (s *Server) Start() {
 	cfg := config.Get()
 
 	// 启动Rest服务器
-	s.echoServer = rest.Setup(cfg.AppName, cfg.Http.Bind)
+	s.echoServer = rest.Setup(cfg.App, cfg.Http.Bind)
 
 	// 启动Grpc服务器
-	s.grpcServer = micro.Setup(cfg.AppName, cfg.Grpc.Bind)
+	s.grpcServer = micro.Setup(cfg.App, cfg.Grpc.Bind)
 }
 
 func (s *Server) Stop(ctx context.Context) {
