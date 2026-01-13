@@ -12,6 +12,8 @@ var (
 type Config struct {
 	configure.Configure
 
+	BaseUrl string
+
 	Grpc struct {
 		Bind string
 	}

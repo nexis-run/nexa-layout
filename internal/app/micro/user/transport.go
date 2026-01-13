@@ -7,7 +7,7 @@ package user
 import (
 	"context"
 
-	"nexis.run/nexa-layout/internal/domain/entity"
+	"nexis.run/nexa-layout/internal/presentation/entity"
 	layoutv1 "nexis.run/nexa-layout/pb/gen/layout/v1"
 )
 

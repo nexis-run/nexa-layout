@@ -1,0 +1,14 @@
+mainFile: route.go
+
+externalPath:
+
+path:
+    - ./internal/app/rest/route
+    - ./internal/app/rest/controller
+    - ./internal/infrastructure/model
+    - ./internal/infrastructure/vo
+    - ./internal/presentation/entity
+
+output: ./assets/docs/
+
+outputTypes: []

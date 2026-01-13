@@ -2,7 +2,7 @@
 //
 // Created at 2025-02-10, by liasica
 
-package server
+package app
 
 import (
 	"context"
@@ -12,9 +12,9 @@ import (
 	"go.uber.org/zap"
 	"nexis.run/nexa/kit/graceful"
 
+	"nexis.run/nexa-layout/internal/app/micro"
+	"nexis.run/nexa-layout/internal/app/rest"
 	"nexis.run/nexa-layout/internal/config"
-	"nexis.run/nexa-layout/internal/server/micro"
-	"nexis.run/nexa-layout/internal/server/rest"
 )
 
 type Server struct {

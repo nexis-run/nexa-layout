@@ -5,7 +5,7 @@ import (
 	"go.uber.org/zap"
 	"nexis.run/nexa/kit/rest"
 
-	"nexis.run/nexa-layout/internal/server/rest/route"
+	"nexis.run/nexa-layout/internal/app/rest/route"
 )
 
 // Setup 初始化Rest服务

@@ -18,7 +18,7 @@ func AuthMiddleware() echo.MiddlewareFunc {
 				return kit.ErrInvalidContext
 			}
 			token := c.Request().Header.Get(HeaderLayoutUserToken)
-			user, err := service.NewUserServiceImpl().AuthToken(token)
+			user, err := service.NewUser().AuthToken(token)
 			if err != nil {
 				return rest.NewError(http.StatusUnauthorized, err.Error())
 			}
