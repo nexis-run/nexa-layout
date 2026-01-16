@@ -13,7 +13,7 @@ import (
 func AuthMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			ctx, ok := c.(*LayoutContext)
+			ctx, ok := c.(*Context)
 			if !ok {
 				return kit.ErrInvalidContext
 			}

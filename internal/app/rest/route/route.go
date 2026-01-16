@@ -31,7 +31,7 @@ func Setup(e *echo.Echo) {
 
 	g := e.Group("/user")
 	g.Use(
-		app.LayoutContextMiddleware(),
+		app.ContextMiddleware(),
 		app.AuthMiddleware(),
 	)
 	g.GET("/info", controller.User.Info)

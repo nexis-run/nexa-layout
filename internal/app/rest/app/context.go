@@ -7,35 +7,35 @@ import (
 	"nexis.run/nexa-layout/internal/infrastructure/model"
 )
 
-type LayoutContext struct {
+type Context struct {
 	*rest.Context
 
 	User *model.User
 }
 
-func NewLayoutContext(c *rest.Context) *LayoutContext {
-	return &LayoutContext{Context: c}
+func NewContext(c *rest.Context) *Context {
+	return &Context{Context: c}
 }
 
-func LayoutContextMiddleware() echo.MiddlewareFunc {
+func ContextMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(NewLayoutContext(c.(*rest.Context)))
+			return next(NewContext(c.(*rest.Context)))
 		}
 	}
 }
 
-func Context(c echo.Context) *LayoutContext {
+func GetContext(c echo.Context) *Context {
 	switch v := c.(type) {
-	case *LayoutContext:
+	case *Context:
 		return v
 	default:
-		return NewLayoutContext(rest.GetContext(c))
+		return NewContext(rest.GetContext(c))
 	}
 }
 
-func ContextBinding[T any](c echo.Context) (*LayoutContext, *T) {
-	ctx := Context(c)
+func ContextBinding[T any](c echo.Context) (*Context, *T) {
+	ctx := GetContext(c)
 	req := new(T)
 	ctx.BindValidate(req)
 	return ctx, req

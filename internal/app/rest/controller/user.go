@@ -37,6 +37,6 @@ func (*user) Login(c echo.Context) (err error) {
 //	@Produce	json
 //	@Success	200	{object}	entity.UserInfoResponse	"请求成功"
 func (*user) Info(c echo.Context) (err error) {
-	ctx := app.Context(c)
+	ctx := app.GetContext(c)
 	return ctx.SendResponse(service.NewUser().Info(ctx.User))
 }
