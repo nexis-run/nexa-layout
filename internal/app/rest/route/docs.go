@@ -21,10 +21,10 @@ func setDocsRoute(e *echo.Echo) {
 
 	e.GET(docPath, func(c echo.Context) error {
 		envStr := "正式环境"
-		baseUrl := config.Get().BaseUrl
-		if baseUrl == "" {
-			baseUrl = fmt.Sprintf("http://%s", c.Request().Host)
-		}
+
+		scheme := c.Scheme()
+		host := c.Request().Host
+		baseUrl := fmt.Sprintf("%s://%s", scheme, host)
 
 		switch config.Get().Environment {
 		case kit.Staging:

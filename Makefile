@@ -9,7 +9,7 @@ clean:
 check-godoc:
 	@if ! command -v godoc &> /dev/null; then \
 		echo "godoc 未安装，正在安装..."; \
-		curl -fsSL https://raw.githubusercontent.com/liasica/godoc/main/install.sh | bash; \
+		curl -fsSL https://raw.githubusercontent.com/liasica/godoc/master/install.sh | bash; \
 	fi
 
 doc: check-godoc
