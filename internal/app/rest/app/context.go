@@ -25,6 +25,7 @@ func ContextMiddleware() echo.MiddlewareFunc {
 	}
 }
 
+// GetContext 获取自定义上下文
 func GetContext(c echo.Context) *Context {
 	switch v := c.(type) {
 	case *Context:
@@ -34,7 +35,8 @@ func GetContext(c echo.Context) *Context {
 	}
 }
 
-func ContextBinding[T any](c echo.Context) (*Context, *T) {
+// GetContextBindingData 获取上下文和绑定数据
+func GetContextBindingData[T any](c echo.Context) (*Context, *T) {
 	ctx := GetContext(c)
 	req := new(T)
 	ctx.BindValidate(req)

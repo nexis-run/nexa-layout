@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/labstack/echo/v4"
-	"nexis.run/nexa/kit/rest"
 
 	"nexis.run/nexa-layout/internal/app/rest/app"
 	"nexis.run/nexa-layout/internal/presentation/entity"
@@ -24,7 +23,7 @@ var User = new(user)
 //	@Param		request	body		entity.UserLoginRequest		true	"请求参数"
 //	@Success	200		{object}	entity.UserLoginResponse	"请求成功"
 func (*user) Login(c echo.Context) (err error) {
-	ctx, req := rest.ContextBinding[entity.UserLoginRequest](c)
+	ctx, req := app.GetContextBindingData[entity.UserLoginRequest](c)
 	return ctx.SendResponse(service.NewUser().Login(req))
 }
 
