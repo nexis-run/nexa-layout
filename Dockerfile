@@ -13,4 +13,4 @@ COPY ./build/release/layout /app/
 
 WORKDIR /app
 
-ENTRYPOINT ["/app/layout", "-config", "/app/config/config.yaml"]
+ENTRYPOINT ["/app/layout", "app", "--config", "/app/config/config.yaml"]

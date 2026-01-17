@@ -24,12 +24,11 @@ type Config struct {
 }
 
 // Setup 初始化配置
-func Setup(p, v string) {
+func Setup(p string) {
 	c, err := configure.Load[Config](p)
 	if err != nil {
 		panic(err)
 	}
-	Version = v
 	instance = &c
 }
 

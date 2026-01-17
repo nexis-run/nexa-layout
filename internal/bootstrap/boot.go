@@ -7,13 +7,12 @@ import (
 	"go.uber.org/zap"
 	"nexis.run/nexa/kit/logger"
 
-	"nexis.run/nexa-layout/internal/app"
 	"nexis.run/nexa-layout/internal/config"
 )
 
 // Boot 初始化项目
 // cfgPath 配置文件路径
-func Boot(cfgPath, ver string) {
+func Boot(cfgPath string) {
 	// 设置全局时区
 	tz := "Asia/Shanghai"
 	_ = os.Setenv("TZ", tz)
@@ -21,7 +20,7 @@ func Boot(cfgPath, ver string) {
 	time.Local = loc
 
 	// 加载配置
-	config.Setup(cfgPath, ver)
+	config.Setup(cfgPath)
 
 	// 获取配置
 	cfg := config.Get()
@@ -31,7 +30,4 @@ func Boot(cfgPath, ver string) {
 
 	// 打印启动信息
 	zap.S().Infof("加载完成, 当前版本号: %s", config.Version)
-
-	// 启动服务器
-	app.Run()
 }
