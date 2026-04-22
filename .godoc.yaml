@@ -1,14 +1,15 @@
-mainFile: route.go
+mainFile: router.go
 
-externalPath:
+markdownFilesDir: ./wiki
 
 path:
-    - ./internal/app/rest/route
-    - ./internal/app/rest/controller
-    - ./internal/infrastructure/model
-    - ./internal/infrastructure/vo
-    - ./internal/presentation/entity
+  - ./internal/application/http/router
+  - ./internal/application/http/handler
+  - ./internal/infrastructure/model
+  - ./internal/infrastructure/dao/pagination
+  - ./internal/presentation/dto
 
 output: ./assets/docs/
 
-outputTypes: []
+outputTypes:
+  - yaml

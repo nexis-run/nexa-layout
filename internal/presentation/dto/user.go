@@ -1,4 +1,4 @@
-package entity
+package dto
 
 // UserLoginRequest 登录实体
 type UserLoginRequest struct {

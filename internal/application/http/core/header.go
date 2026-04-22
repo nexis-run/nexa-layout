@@ -1,4 +1,4 @@
-package app
+package core
 
 const (
 	HeaderLayoutUserToken = "X-Layout-User-Token"

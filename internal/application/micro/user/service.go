@@ -7,7 +7,7 @@ package user
 import (
 	"context"
 
-	"nexis.run/nexa-layout/internal/presentation/entity"
+	"nexis.run/nexa-layout/internal/presentation/dto"
 	"nexis.run/nexa-layout/internal/presentation/service"
 )
 
@@ -18,6 +18,6 @@ func NewService() *Service {
 	return &Service{}
 }
 
-func (s *Service) Login(_ context.Context, req *entity.UserLoginRequest) (*entity.UserLoginResponse, error) {
+func (s *Service) Login(_ context.Context, req *dto.UserLoginRequest) (*dto.UserLoginResponse, error) {
 	return service.NewUser().Login(req)
 }

@@ -7,7 +7,7 @@ package user
 import (
 	"context"
 
-	"nexis.run/nexa-layout/internal/presentation/entity"
+	"nexis.run/nexa-layout/internal/presentation/dto"
 	layoutv1 "nexis.run/nexa-layout/pb/gen/layout/v1"
 )
 
@@ -18,7 +18,7 @@ type GrpcServer struct {
 }
 
 func (g *GrpcServer) Login(ctx context.Context, request *layoutv1.LoginRequest) (*layoutv1.LoginResponse, error) {
-	resp, err := g.svc.Login(ctx, &entity.UserLoginRequest{
+	resp, err := g.svc.Login(ctx, &dto.UserLoginRequest{
 		Username: request.Username,
 		Password: request.Password,
 	})

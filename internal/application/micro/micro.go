@@ -5,7 +5,7 @@ import (
 	"go.uber.org/zap"
 	"nexis.run/nexa/kit/micro"
 
-	"nexis.run/nexa-layout/internal/app/micro/user"
+	"nexis.run/nexa-layout/internal/application/micro/user"
 )
 
 // Setup 初始化微服务

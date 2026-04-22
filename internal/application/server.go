@@ -2,7 +2,7 @@
 //
 // Created at 2025-02-10, by liasica
 
-package app
+package application
 
 import (
 	"context"
@@ -12,8 +12,8 @@ import (
 	"go.uber.org/zap"
 	"nexis.run/nexa/kit/graceful"
 
-	"nexis.run/nexa-layout/internal/app/micro"
-	"nexis.run/nexa-layout/internal/app/rest"
+	"nexis.run/nexa-layout/internal/application/http"
+	"nexis.run/nexa-layout/internal/application/micro"
 	"nexis.run/nexa-layout/internal/config"
 )
 
@@ -28,7 +28,7 @@ func (s *Server) Start() {
 	cfg := config.Get()
 
 	// 启动Rest服务器
-	s.echoServer = rest.Setup(cfg.App, cfg.Http.Bind)
+	s.echoServer = http.Setup(cfg.App, cfg.Http.Bind)
 
 	// 启动Grpc服务器
 	s.grpcServer = micro.Setup(cfg.App, cfg.Grpc.Bind)

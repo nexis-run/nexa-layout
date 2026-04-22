@@ -7,7 +7,7 @@ package internal
 import (
 	"github.com/spf13/cobra"
 
-	"nexis.run/nexa-layout/internal/app"
+	"nexis.run/nexa-layout/internal/application"
 )
 
 func App() (*cobra.Group, *cobra.Command) {
@@ -22,7 +22,7 @@ func App() (*cobra.Group, *cobra.Command) {
 		CompletionOptions: cobra.CompletionOptions{DisableDefaultCmd: true},
 		GroupID:           g.ID,
 		Run: func(_ *cobra.Command, _ []string) {
-			app.Run()
+			application.Run()
 		},
 	}
 

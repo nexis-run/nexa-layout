@@ -2,29 +2,34 @@
 //
 // Created at 2025-08-04, by liasica
 
-package route
+package router
 
 import (
-	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/labstack/echo/v4"
 	"nexis.run/nexa/kit"
+	"nexis.run/nexa/kit/rest"
 
 	"nexis.run/nexa-layout/assets"
 	"nexis.run/nexa-layout/internal/config"
 )
 
-func setDocsRoute(e *echo.Echo) {
-	docPath := "/docs/openapi.yaml"
+func setDocsRouter(e *echo.Echo) {
+	openapiPath := "/docs/openapi.yaml"
+	docPath := "/docs"
 
-	e.GET(docPath, func(c echo.Context) error {
+	e.GET(openapiPath, func(c echo.Context) error {
 		envStr := "正式环境"
 
-		scheme := c.Scheme()
-		host := c.Request().Host
-		baseUrl := fmt.Sprintf("%s://%s", scheme, host)
+		u, err := rest.GetRequestUrl(c)
+		if err != nil {
+			return err
+		}
+
+		baseUrl := strings.Replace(u.String(), openapiPath, "", 1)
 
 		switch config.Get().Environment {
 		case kit.Staging:
@@ -41,10 +46,18 @@ func setDocsRoute(e *echo.Echo) {
 		return c.String(http.StatusOK, assets.OpenApiData)
 	})
 
-	e.GET("/docs", func(c echo.Context) error {
+	e.GET(docPath, func(c echo.Context) error {
+		u, err := rest.GetRequestUrl(c)
+		if err != nil {
+			return err
+		}
+
+		baseUrl := strings.Replace(u.String(), docPath, "", 1)
+		specURL, _ := url.JoinPath(baseUrl, openapiPath)
+
 		return c.Render(http.StatusOK, "docs.html", map[string]string{
-			"title":   fmt.Sprintf("「%s」文档", config.Get().App),
-			"specURL": docPath,
+			"title":   "订单管理系统 API",
+			"specURL": specURL,
 		})
 	})
 }

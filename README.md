@@ -1,4 +1,4 @@
-# kratos-layout
+# oos
 
 基于DDD领域驱动设计的kratos模板
 
@@ -6,6 +6,22 @@
 - https://github.com/KendoCross/kendoDDD
 - https://github.com/vgocoder/go-ddd
 - https://juejin.cn/post/7226556923238203429
+
+### 常用命令
+
+```bash
+# 生成 dao
+go run -mod=mod nexis.run/nexa/cmd/nexa@master new dao Name
+
+# 生成 ent context
+go run -mod=mod nexis.run/nexa/cmd/nexa@master new echoctx Name
+
+# 添加 ent schema
+go run -mod=mod nexis.run/nexa/cmd/nexa@master ent new Name
+
+# 生成 ent 代码
+go run -mod=mod nexis.run/nexa/cmd/nexa@master ent generate
+```
 
 ### Commit 格式规范
 
@@ -35,55 +51,126 @@ community：              社区相关的修改，如修改 Github Issue 模板�
 
 ### 基本结构
 
+#### 整体架构图
+
 ```
-         ┌────────────────────────┐
-         │     Infrastructure     │
-       / └────────────────────────┘ \
-      /                              \
-     /                                \
-    ▼                                  ▼
-┌──────────────┐      ┌─────────────────────┐
-│ Presentation │ ────►│ Server / Rest / ... │
-└──────────────┘      └─────────────────────┘
+┌───────────────────────────────────────────────────────────────────────────────────┐
+│                                    项目架构图                                     │
+├───────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                   │
+│  ┌─────────────┐      ┌─────────────┐      ┌─────────────┐      ┌──────────────┐  │
+│  │  HTTP/gRPC  │ ───▶ │   Handler   │ ───▶ │   Service   │ ◀─── │ Application  │  │
+│  │  (外部请求) │      │   (接口层)  │      │   (业务层)  │      │  (其他服务)  │  │
+│  └─────────────┘      └─────────────┘      └─────────────┘      └──────────────┘  │
+│                              │                      │                             │
+│                              ▼                      ▼                             │
+│                       ┌──────────────────────────────────┐                        │
+│                       │           DI Container           │                        │
+│                       │      (依赖容器 / 单例管理)       │                        │                   
+│                       └──────────────────────────────────┘                        │
+│                            │                      │                               │
+│                            ▼                      ▼                               │
+│                    ┌───────────────┐      ┌────────────────┐                      │
+│                    │  Integration  │      │ Infrastructure │                      │
+│                    │  (服务集成)   │ ───▶ │  (基础设施)    │                      │                   
+│                    └───────────────┘      └────────────────┘                      │
+│                            │                       │                              │
+│                            ▼                       ▼                              │
+│                      ┌─────────────────────────────────────┐                      │
+│                      │  PostgreSQL / Redis / External API  │                      │
+│                      └─────────────────────────────────────┘                      │
+│                                                                                   │
+└───────────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### 请求流程图
+
+```
+HTTP Request
+    │
+    ▼
+┌─────────────────┐
+│   Middleware    │  ← 认证、日志、限流、CORS 等
+│  (http/router)  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│     Router      │  ← 路由分发 (Manager/Rider)
+│  (http/router)  │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│     Handler     │  ← HTTP 处理器
+│ (http/*/handler)│  接收请求、参数绑定
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│     Service     │  ← 业务逻辑
+│ (presentation/  │  调用 DAO、Integration
+│    service)     │
+└────────┬────────┘
+         │
+         ├─────────────┬──────────────┐
+         ▼             ▼              ▼
+┌───────────────┐ ┌───────────┐  ┌─────────────┐
+│      DAO      │ │Integration│  │    DTO      │
+│  (数据访问)   │ │   (集成)  │  │  (数据传输) │
+└───────┬───────┘ └─────┬─────┘  └─────────────┘
+        │               │
+        ▼               ▼
+┌─────────────┐ ┌──────────────┐
+│  Ent ORM    │ │    Redis     │
+│ (database)  │ │  External API│
+└─────────────┘ └──────────────┘
 ```
 
 ### 目录结构
 
 ```
 .
-├── README.md
-├── cmd
-│   └── server
-│       └── main.go
-├── go.mod
-├── go.sum
-│── internal
-│   ├── bootstrap                           # 启动目录
-│   │   └── boot.go                         # 启动文件
-│   ├── infrastructure                      # 基础设施层，包含数据库、缓存等
-│   │   ├── common                          # 基础包
-│   │   ├── model                           # 模型目录，包含数据库模型、缓存模型等
-│   │   └── vo                              # 定义值对象，包含常量、属性、错误等
-│   ├── presentation                        # 展现层，主要负责接收请求和返回响应
-│   │   ├── entity                          # 实体目录，用于定义领域对象以及请求、响应数据结构
-│   │   ├── repository                      # 仓储目录，实现domain层的repository接口
-│   │   └── service                         # 展现服务目录，用户实现domain层的service接口或实现grpc服务，配合repository处理业务逻辑
-│   ├── rest                                # Rest接口层
-│   │   ├── app                             # 定义rest服务（仅rest使用），例如context、middleware、validator等
-│   │   ├── controller                      # 控制器，用于处理接收数据和返回数据，调用service对外提供服务
-│   │   └── route                           # 路由
-│   └── app                                 # 应用目录，包含grpc、http、websocket等服务
-│       ├── micro                           # 微服务目录
-│       └── rest                            # Rest服务目录
-│           ├── app                         # 定义服务（仅 rest 使用），例如context、middleware、validator等
-│           │   ├── context.go              # ...
-│           │   ├── header.go               # ...
-│           │   └── user_middleware.go      # ...
-│           ├── controller                  # 控制器目录，用于处理接收数据和返回数据，调用service对外提供服务
-│           │   ├── controller.go           # ...
-│           │   └── user.go                 # ...
-│           ├── route                       # 路由目录
-│           │   └── route.go                # 路由入口文件
-│           └── rest.go                     # rest服务入口文件
-└── pb                              # pb目录，用于存放proto文件，大仓模式全局共享
+├── assets                              # 资源文件
+│   ├── assets.go
+│   ├── docs                            # API 文档
+│   ├── presets                         # 预设数据
+│   └── templates                       # 模板文件
+├── pkg                                 # 公共工具包
+├── wiki                                # 文档目录
+└── internal                            # 内部代码
+    ├── bootstrap                       # 启动引导
+    │   ├── boot.go                     # 启动入口
+    ├── config                          # 配置管理
+    │   ├── config.go                   # 配置结构
+    ├── di                              # 依赖注入 (DI Container)
+    │   ├── di.go                       # 容器定义
+    │   ├── wire.go                     # Wire 配置
+    ├── infrastructure                  # 基础设施层
+    │   ├── dao                         # 数据访问对象
+    │   │   └── pagination              # 分页工具
+    │   ├── ent                         # Ent ORM
+    │   └── model                       # 模型定义
+            └── ...                     # 业务模型、错误定义等
+    ├── integration                     # 集成服务层
+    │   ├── alisms                      # 阿里云短信
+    │   ├── auth                        # 认证服务
+    │   ├── captcha                     # 验证码服务
+    │   ├── hotfilestore                # 热文件存储
+    │   ├── wxapp                       # 微信小程序
+    │   └── kafka                       # Kafka 客户端封装
+    ├── presentation                    # 展现层
+    │   ├── dto                         # 数据传输对象
+    │   └── service                     # 业务服务
+    └── application                     # 应用服务层
+        ├── application.go              # 服务启动、停止
+        ├── http                        # HTTP 服务
+        │   ├── http.go                 # HTTP 初始化
+        │   ├── core                    # 核心组件
+        │   │   └── ...                 # Context、Middleware 等
+        │   ├── handler                 # http处理器
+        │   └── router                  # 路由配置
+        │       ├── router.go           # 路由入口
+        │       └── docs.go             # 文档路由
+        └── kafka                       # Kafka 监听
 ```
