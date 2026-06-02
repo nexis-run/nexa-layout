@@ -1,4 +1,4 @@
-package handler
+package user
 
 import (
 	"github.com/labstack/echo/v4"
@@ -7,11 +7,6 @@ import (
 	"nexis.run/nexa-layout/internal/di"
 	"nexis.run/nexa-layout/internal/presentation/dto"
 )
-
-type UserHandler struct {
-}
-
-var User = new(UserHandler)
 
 // Login
 //
@@ -22,7 +17,7 @@ var User = new(UserHandler)
 // @Produce	json
 // @Param	request	body		dto.UserLoginRequest	true	"请求参数"
 // @Success	200		{object}	dto.UserLoginResponse	"请求成功"
-func (*UserHandler) Login(c echo.Context) error {
+func Login(c echo.Context) error {
 	ctx, req := core.GetContextBindingData[dto.UserLoginRequest](c)
 
 	return ctx.SendResponse(di.C.Service.User.Login(req))
@@ -31,12 +26,12 @@ func (*UserHandler) Login(c echo.Context) error {
 // Info
 //
 // @ID		UserInfo
-// @Router	/UserHandler/info [GET]
+// @Router	/user/info [GET]
 // @Summary	获取用户信息
 // @Tags	User - 用户
 // @Produce	json
 // @Success	200	{object}	dto.UserInfoResponse	"请求成功"
-func (*UserHandler) Info(c echo.Context) error {
+func Info(c echo.Context) error {
 	ctx := core.GetContext(c)
 
 	return ctx.SendResponse(di.C.Service.User.Info(ctx.User))

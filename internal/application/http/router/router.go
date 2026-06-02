@@ -8,7 +8,7 @@ import (
 
 	"nexis.run/nexa-layout/assets"
 	"nexis.run/nexa-layout/internal/application/http/core"
-	"nexis.run/nexa-layout/internal/application/http/handler"
+	userhandler "nexis.run/nexa-layout/internal/application/http/handler/user"
 )
 
 // Setup 设置Rest路由
@@ -51,12 +51,12 @@ func Setup(e *echo.Echo) {
 	)
 
 	// 用户登录
-	e.POST("/login", handler.User.Login)
+	e.POST("/login", userhandler.Login)
 
 	// 鉴权路由组
 	g := e.Group("/user")
 	g.Use(
 		core.AuthMiddleware(),
 	)
-	g.GET("/info", handler.User.Info)
+	g.GET("/info", userhandler.Info)
 }

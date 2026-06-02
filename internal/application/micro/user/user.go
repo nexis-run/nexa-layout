@@ -11,5 +11,5 @@ import (
 )
 
 func Register(s *grpc.Server) {
-	layoutv1.RegisterUserServiceServer(s, NewGrpcServer(NewService()))
+	layoutv1.RegisterUserServiceServer(s, &GrpcServer{})
 }
