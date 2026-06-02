@@ -24,12 +24,12 @@ func setDocsRouter(e *echo.Echo) {
 	e.GET(openapiPath, func(c echo.Context) error {
 		envStr := "正式环境"
 
-		u, err := rest.GetRequestUrl(c)
+		u, err := rest.GetRequestURL(c)
 		if err != nil {
 			return err
 		}
 
-		baseUrl := strings.Replace(u.String(), openapiPath, "", 1)
+		baseURL := strings.Replace(u.String(), openapiPath, "", 1)
 
 		switch config.Get().Environment {
 		case kit.Staging:
@@ -40,20 +40,20 @@ func setDocsRouter(e *echo.Echo) {
 			envStr = "正式环境"
 		}
 
-		assets.OpenApiData = strings.ReplaceAll(assets.OpenApiData, ">>[BASE_URL]<<", baseUrl)
+		assets.OpenApiData = strings.ReplaceAll(assets.OpenApiData, ">>[BASE_URL]<<", baseURL)
 		assets.OpenApiData = strings.ReplaceAll(assets.OpenApiData, ">>[ENV]<<", envStr)
 
 		return c.String(http.StatusOK, assets.OpenApiData)
 	})
 
 	e.GET(docPath, func(c echo.Context) error {
-		u, err := rest.GetRequestUrl(c)
+		u, err := rest.GetRequestURL(c)
 		if err != nil {
 			return err
 		}
 
-		baseUrl := strings.Replace(u.String(), docPath, "", 1)
-		specURL, _ := url.JoinPath(baseUrl, openapiPath)
+		baseURL := strings.Replace(u.String(), docPath, "", 1)
+		specURL, _ := url.JoinPath(baseURL, openapiPath)
 
 		return c.Render(http.StatusOK, "docs.html", map[string]string{
 			"title":   "订单管理系统 API",
