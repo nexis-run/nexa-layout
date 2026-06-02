@@ -22,6 +22,9 @@ func Initialize(cfg *config.Config) (*Container, error) {
 		// DAO
 		daoProviderSet,
 
+		// Service
+		serviceProviderSet,
+
 		// Container
 		wire.Struct(new(Container), "*"),
 	)

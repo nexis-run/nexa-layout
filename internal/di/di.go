@@ -9,6 +9,7 @@ import (
 
 	"nexis.run/nexa-layout/internal/config"
 	"nexis.run/nexa-layout/internal/infrastructure/dao"
+	"nexis.run/nexa-layout/internal/presentation/service"
 )
 
 // C 全局依赖容器, 由 Initialize 在 bootstrap 阶段初始化
@@ -24,6 +25,9 @@ type Container struct {
 
 	// Dao
 	Dao *Dao
+
+	// Service
+	Service *Service
 }
 
 // Integration 集成服务
@@ -49,4 +53,17 @@ var daoProviderSet = wire.NewSet(
 	dao.NewUser,
 
 	wire.Struct(new(Dao), "*"),
+)
+
+// Service 业务服务聚合
+type Service struct {
+	User *service.UserService
+}
+
+// serviceProviderSet Service Provider 集合
+// 后续新增 Service 时, 将对应的构造函数追加到此处
+var serviceProviderSet = wire.NewSet(
+	service.NewUser,
+
+	wire.Struct(new(Service), "*"),
 )

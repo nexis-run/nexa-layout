@@ -12,10 +12,8 @@ type UserService struct {
 	repo *dao.UserDao
 }
 
-func NewUser() *UserService {
-	return &UserService{
-		repo: dao.NewUser(),
-	}
+func NewUser(repo *dao.UserDao) *UserService {
+	return &UserService{repo: repo}
 }
 
 func (s *UserService) Login(req *dto.UserLoginRequest) (*dto.UserLoginResponse, error) {
@@ -23,19 +21,20 @@ func (s *UserService) Login(req *dto.UserLoginRequest) (*dto.UserLoginResponse, 
 	if err != nil {
 		return nil, err
 	}
-	res := &dto.UserLoginResponse{
+
+	return &dto.UserLoginResponse{
 		ID:       user.ID,
 		Username: user.Username,
 		Role:     user.Role,
 		Token:    "token",
-	}
-	return res, nil
+	}, nil
 }
 
 func (s *UserService) AuthToken(token string) (*model.User, error) {
 	if token != "token" {
 		return nil, kit.ErrUnauthorized
 	}
+
 	return s.repo.GetUserByUsername("demo")
 }
 

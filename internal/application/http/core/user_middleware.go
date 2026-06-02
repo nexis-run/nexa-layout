@@ -7,7 +7,7 @@ import (
 	"nexis.run/nexa/kit"
 	"nexis.run/nexa/kit/rest"
 
-	"nexis.run/nexa-layout/internal/presentation/service"
+	"nexis.run/nexa-layout/internal/di"
 )
 
 func AuthMiddleware() echo.MiddlewareFunc {
@@ -17,12 +17,16 @@ func AuthMiddleware() echo.MiddlewareFunc {
 			if !ok {
 				return kit.ErrInvalidContext
 			}
+
 			token := c.Request().Header.Get(HeaderLayoutUserToken)
-			user, err := service.NewUser().AuthToken(token)
+
+			user, err := di.C.Service.User.AuthToken(token)
 			if err != nil {
 				return rest.NewError(http.StatusUnauthorized, err.Error())
 			}
+
 			ctx.User = user
+
 			return next(ctx)
 		}
 	}

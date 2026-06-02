@@ -7,8 +7,8 @@ package user
 import (
 	"context"
 
+	"nexis.run/nexa-layout/internal/di"
 	"nexis.run/nexa-layout/internal/presentation/dto"
-	"nexis.run/nexa-layout/internal/presentation/service"
 )
 
 type Service struct {
@@ -19,5 +19,5 @@ func NewService() *Service {
 }
 
 func (s *Service) Login(_ context.Context, req *dto.UserLoginRequest) (*dto.UserLoginResponse, error) {
-	return service.NewUser().Login(req)
+	return di.C.Service.User.Login(req)
 }

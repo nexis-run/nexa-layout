@@ -9,6 +9,7 @@ package di
 import (
 	"nexis.run/nexa-layout/internal/config"
 	"nexis.run/nexa-layout/internal/infrastructure/dao"
+	"nexis.run/nexa-layout/internal/presentation/service"
 )
 
 // Injectors from wire.go:
@@ -20,10 +21,15 @@ func Initialize(cfg *config.Config) (*Container, error) {
 	diDao := &Dao{
 		User: userDao,
 	}
+	userService := service.NewUser(userDao)
+	diService := &Service{
+		User: userService,
+	}
 	container := &Container{
 		Config:      cfg,
 		Integration: integration,
 		Dao:         diDao,
+		Service:     diService,
 	}
 	return container, nil
 }
