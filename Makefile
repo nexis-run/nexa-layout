@@ -29,10 +29,19 @@ doc-preview:
 	@echo "正在生成并预览文档..."
 	go run -mod=mod github.com/liasica/godoc/cmd/godoc@v1.0.10 preview --generate
 
-build: doc
+build-local: doc wire
+	go build -trimpath -tags=sonic,poll_opt -gcflags "all=-N -l" -ldflags "-X nexis.run/nexa-layout/internal/config.Version=$(shell git rev-parse --short HEAD)" -o build/release/layout cmd/layout/main.go
+	@echo "✅ 本地构建完成，二进制文件位于 build/release/layout"
+
+build: doc wire
 	GO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -tags=sonic,poll_opt -gcflags "all=-N -l" -ldflags "-X nexis.run/nexa-layout/internal/config.Version=$(shell git rev-parse --short HEAD)" -o build/release/layout cmd/layout/main.go
+	@echo "✅ 构建完成，二进制文件位于 build/release/layout"
 
 build-image: build
 	@echo "正在构建并推送Docker镜像..."
 	docker build --platform=linux/amd64 -t harbor.liasica.com/auroraride/layout:prod -f Dockerfile .
 	docker push harbor.liasica.com/auroraride/layout:prod
+	@echo "✅ Docker镜像构建并推送完成"
+
+all: clean build-image
+	@echo "✅ 所有任务完成"
