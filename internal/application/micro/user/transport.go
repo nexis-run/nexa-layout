@@ -25,6 +25,7 @@ func (g *GrpcServer) Login(ctx context.Context, request *layoutv1.LoginRequest) 
 	if err != nil {
 		return nil, err
 	}
+
 	return &layoutv1.LoginResponse{
 		Id:       resp.ID,
 		Token:    resp.Token,

@@ -40,5 +40,6 @@ func GetContextBindingData[T any](c echo.Context) (*Context, *T) {
 	ctx := GetContext(c)
 	req := new(T)
 	ctx.BindValidate(req)
+
 	return ctx, req
 }

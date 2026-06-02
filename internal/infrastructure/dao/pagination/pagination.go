@@ -91,7 +91,6 @@ func PageList[Q Counter, D any](ctx context.Context, query Querier[Q, D], p *Pag
 	}
 
 	res.Total, err = query.Clone().Count(ctx)
-
 	if err != nil {
 		return
 	}
@@ -125,7 +124,6 @@ func OrderedPageList[Q Counter, O OrderOption, D any](ctx context.Context, query
 	}
 
 	res.Total, err = query.Clone().Count(ctx)
-
 	if err != nil {
 		return
 	}
@@ -137,8 +135,8 @@ func OrderedPageList[Q Counter, O OrderOption, D any](ctx context.Context, query
 	}
 
 	var orders []O
-	orders, err = GetOrder[O](p, m, options.ignoreOrderErr)
 
+	orders, err = GetOrder[O](p, m, options.ignoreOrderErr)
 	if err != nil {
 		return
 	}

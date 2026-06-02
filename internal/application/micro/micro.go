@@ -9,15 +9,16 @@ import (
 )
 
 // Setup 初始化微服务
-func Setup(app, address string) (server *grpc.Server) {
-	var ch chan error
-	server, ch = micro.Run(app, address, func(s *grpc.Server) {
+func Setup(app, address string) *grpc.Server {
+	server, ch := micro.Run(app, address, func(s *grpc.Server) {
 		user.Register(s)
 	})
+
 	go func() {
 		if err := <-ch; err != nil {
-			zap.L().Fatal(err.Error())
+			zap.L().Fatal("grpc服务启动失败", zap.Error(err))
 		}
 	}()
-	return
+
+	return server
 }

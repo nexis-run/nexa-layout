@@ -29,12 +29,14 @@ type OrderFields []*OrderField
 
 // GetString 将 OrderFields 转换为字符串表示
 // 格式为: `字段:排序规则|字段:排序规则`, 例如: `id:desc|created_at:asc`
-func (o OrderFields) GetString() (str string) {
+func (o OrderFields) GetString() string {
 	var builder strings.Builder
+
 	for i, field := range o {
 		if i > 0 {
 			builder.WriteString("|")
 		}
+
 		builder.WriteString(field.GetString())
 	}
 
@@ -65,11 +67,14 @@ func ParseOrderFields(orderStr string) []OrderField {
 	if orderStr == "" {
 		return result
 	}
+
 	items := splitAndTrim(orderStr, "|")
+
 	for _, item := range items {
 		parts := splitAndTrim(item, ":")
 		if len(parts) == 2 {
 			field := parts[0]
+
 			by := By(parts[1])
 			if field != "" && (by == ByAsc || by == ByDesc) {
 				result = append(result, OrderField{Field: field, By: by})
@@ -83,6 +88,7 @@ func ParseOrderFields(orderStr string) []OrderField {
 // splitAndTrim 按分隔符分割并去除空格
 func splitAndTrim(s, sep string) []string {
 	raw := make([]string, 0)
+
 	for _, part := range split(s, sep) {
 		trimmed := trimSpace(part)
 
@@ -98,7 +104,9 @@ func splitAndTrim(s, sep string) []string {
 func split(s, sep string) []string {
 	// 推荐实际项目用 strings.Split
 	var res []string
+
 	start := 0
+
 	for i := 0; i+len(sep) <= len(s); i++ {
 		if s[i:i+len(sep)] == sep {
 			res = append(res, s[start:i])
@@ -106,6 +114,7 @@ func split(s, sep string) []string {
 			i = start - 1
 		}
 	}
+
 	res = append(res, s[start:])
 
 	return res
@@ -115,9 +124,11 @@ func split(s, sep string) []string {
 func trimSpace(s string) string {
 	// 推荐实际项目用 strings.TrimSpace
 	start, end := 0, len(s)
+
 	for start < end && (s[start] == ' ' || s[start] == '\t' || s[start] == '\n') {
 		start++
 	}
+
 	for end > start && (s[end-1] == ' ' || s[end-1] == '\t' || s[end-1] == '\n') {
 		end--
 	}
@@ -139,10 +150,12 @@ func (p *Paginator) GetOrder(fields map[string]string, ignoreErr bool) (orders [
 
 		if !ok {
 			zap.L().Error("排序字段非法", zap.String("field", of.Field), zap.Reflect("fields", fields))
+
 			if !ignoreErr {
 				return nil, fmt.Errorf("%w: %s", model.ErrInvalidOrderField, of.Field)
 			}
 		}
+
 		switch of.By {
 		case ByAsc:
 			// TODO: 可使用 ent.Asc 替代

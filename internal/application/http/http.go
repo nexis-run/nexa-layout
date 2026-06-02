@@ -9,15 +9,16 @@ import (
 )
 
 // Setup 初始化Rest服务
-func Setup(app, address string) (echoServer *echo.Echo) {
-	var ch chan error
-	echoServer, ch = rest.Run(app, address, func(e *echo.Echo) {
+func Setup(app, address string) *echo.Echo {
+	echoServer, ch := rest.Run(app, address, func(e *echo.Echo) {
 		router.Setup(e)
 	})
+
 	go func() {
 		if err := <-ch; err != nil {
 			zap.L().Fatal("rest服务启动失败", zap.Error(err))
 		}
 	}()
-	return
+
+	return echoServer
 }
