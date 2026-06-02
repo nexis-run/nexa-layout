@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"log"
 	"os"
 	"time"
 
@@ -8,6 +9,7 @@ import (
 	"nexis.run/nexa/kit/logger"
 
 	"nexis.run/nexa-layout/internal/config"
+	"nexis.run/nexa-layout/internal/di"
 )
 
 // Boot 初始化项目
@@ -28,6 +30,13 @@ func Boot(cfgPath string) {
 	// 初始化日志
 	logger.Setup(cfg.Logger)
 
+	// 注入依赖
+	var err error
+	di.C, err = di.Initialize(cfg)
+	if err != nil {
+		log.Fatalf("依赖注入失败: %v", err)
+	}
+
 	// 打印启动信息
-	zap.S().Infof("加载完成, 当前版本号: %s", config.Version)
+	zap.S().Infof("初始化完成, 当前版本号: %s", config.Version)
 }
