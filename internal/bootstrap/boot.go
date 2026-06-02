@@ -22,19 +22,18 @@ func Boot(cfgPath string) {
 	time.Local = loc
 
 	// 加载配置
-	config.Setup(cfgPath)
-
-	// 获取配置
-	cfg := config.Get()
+	cfg, err := config.Load(cfgPath)
+	if err != nil {
+		log.Fatalf("配置加载失败: %v", err)
+	}
 
 	// 初始化日志
 	logger.Setup(cfg.Logger)
 
 	// 注入依赖
-	var err error
 	di.C, err = di.Initialize(cfg)
 	if err != nil {
-		log.Fatalf("依赖注入失败: %v", err)
+		zap.L().Fatal("依赖注入失败", zap.Error(err))
 	}
 
 	// 打印启动信息

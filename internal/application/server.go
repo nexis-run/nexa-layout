@@ -6,6 +6,7 @@ package application
 
 import (
 	"context"
+	"sync"
 
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/labstack/echo/v4"
@@ -14,7 +15,7 @@ import (
 
 	"nexis.run/nexa-layout/internal/application/http"
 	"nexis.run/nexa-layout/internal/application/micro"
-	"nexis.run/nexa-layout/internal/config"
+	"nexis.run/nexa-layout/internal/di"
 )
 
 type Server struct {
@@ -25,24 +26,35 @@ type Server struct {
 }
 
 func (s *Server) Start() {
-	cfg := config.Get()
+	cfg := di.C.Config
 
 	// 启动Rest服务器
-	s.echoServer = http.Setup(cfg.App, cfg.Http.Bind)
+	s.echoServer = http.Setup(cfg.App, cfg.HTTP.Bind)
 
 	// 启动Grpc服务器
-	s.grpcServer = micro.Setup(cfg.App, cfg.Grpc.Bind)
+	s.grpcServer = micro.Setup(cfg.App, cfg.GRPC.Bind)
 }
 
 func (s *Server) Stop(ctx context.Context) {
+	var wg sync.WaitGroup
+
 	if s.grpcServer != nil {
-		zap.L().Info("grpc服务器关闭中...")
-		s.grpcServer.GracefulStop()
+		wg.Go(func() {
+			zap.L().Info("grpc服务器关闭中...")
+
+			s.grpcServer.GracefulStop()
+		})
 	}
+
 	if s.echoServer != nil {
-		zap.L().Info("rest服务器关闭中...")
-		_ = s.echoServer.Shutdown(ctx)
+		wg.Go(func() {
+			zap.L().Info("rest服务器关闭中...")
+
+			_ = s.echoServer.Shutdown(ctx)
+		})
 	}
+
+	wg.Wait()
 }
 
 func Run() {

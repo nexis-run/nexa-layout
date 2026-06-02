@@ -14,7 +14,7 @@ import (
 	"nexis.run/nexa/kit/rest"
 
 	"nexis.run/nexa-layout/assets"
-	"nexis.run/nexa-layout/internal/config"
+	"nexis.run/nexa-layout/internal/di"
 )
 
 func setDocsRouter(e *echo.Echo) {
@@ -31,7 +31,7 @@ func setDocsRouter(e *echo.Echo) {
 
 		baseURL := strings.Replace(u.String(), openapiPath, "", 1)
 
-		switch config.Get().Environment {
+		switch di.C.Config.Environment {
 		case kit.Staging:
 			envStr = "测试环境"
 		case kit.Development:
@@ -40,10 +40,10 @@ func setDocsRouter(e *echo.Echo) {
 			envStr = "正式环境"
 		}
 
-		assets.OpenApiData = strings.ReplaceAll(assets.OpenApiData, ">>[BASE_URL]<<", baseURL)
-		assets.OpenApiData = strings.ReplaceAll(assets.OpenApiData, ">>[ENV]<<", envStr)
+		assets.OpenAPIData = strings.ReplaceAll(assets.OpenAPIData, ">>[BASE_URL]<<", baseURL)
+		assets.OpenAPIData = strings.ReplaceAll(assets.OpenAPIData, ">>[ENV]<<", envStr)
 
-		return c.String(http.StatusOK, assets.OpenApiData)
+		return c.String(http.StatusOK, assets.OpenAPIData)
 	})
 
 	e.GET(docPath, func(c echo.Context) error {

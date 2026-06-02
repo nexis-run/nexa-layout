@@ -4,35 +4,30 @@ import (
 	"nexis.run/nexa/kit/configure"
 )
 
-var (
-	instance *Config
-	Version  string
-)
+// Version 编译期由 -ldflags 注入
+var Version string
 
+// Config 项目配置
 type Config struct {
 	configure.Configure
 
-	BaseUrl string
+	BaseURL string
 
-	Grpc struct {
+	GRPC struct {
 		Bind string
 	}
 
-	Http struct {
+	HTTP struct {
 		Bind string
 	}
 }
 
-// Setup 初始化配置
-func Setup(p string) {
+// Load 加载配置文件
+func Load(p string) (*Config, error) {
 	c, err := configure.Load[Config](p)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	instance = &c
-}
 
-// Get 获取配置
-func Get() *Config {
-	return instance
+	return &c, nil
 }

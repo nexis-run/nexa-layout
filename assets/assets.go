@@ -14,5 +14,5 @@ var (
 	TemplateFS embed.FS
 
 	//go:embed docs/swagger.yaml
-	OpenApiData string
+	OpenAPIData string
 )
