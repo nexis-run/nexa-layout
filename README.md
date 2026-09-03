@@ -18,7 +18,6 @@
 | Go | ≥ 1.25.3 | `go.mod` 声明的最低版本 |
 | Docker | 任意 | 仅 `make build-image` 需要 |
 | gclint | 最新 | golangci-lint 增强版，提交前 lint 用，安装见 `nexis.run/nexa` 文档 |
-| 私有模块访问 | — | `nexis.run/nexa` 为私有模块，需配置 `GOPRIVATE=nexis.run` 与对应认证 |
 
 ### 1.2 克隆与重命名
 
@@ -26,7 +25,7 @@
 
 ```bash
 # 1. 克隆
-git clone <repo-url> myapp
+git clone https://github.com/nexis-run/nexa-layout.git myapp
 cd myapp
 rm -rf .git && git init
 
