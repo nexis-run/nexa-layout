@@ -38,5 +38,6 @@ bin/
 *.swp
 tests/
 
-assets/docs/
 build/
+go.work.sum
+.nexa-ent-*/

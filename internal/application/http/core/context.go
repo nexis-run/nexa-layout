@@ -20,7 +20,7 @@ func NewContext(c *rest.Context) *Context {
 func ContextMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(NewContext(c.(*rest.Context)))
+			return next(GetContext(c))
 		}
 	}
 }

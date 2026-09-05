@@ -1,0 +1,10 @@
+entPath: internal/infrastructure/ent
+daoPath: internal/infrastructure/dao
+echoctxPath: internal/application/http/core
+ormclient: ''
+entFeatures: []
+entTemplates: []
+di:
+  path: internal/di/di.go
+  daoStructName: Dao
+  daoProviderSetVar: daoProviderSet

@@ -1,9 +1,9 @@
 package bootstrap
 
 import (
-	"log"
-	"os"
+	"fmt"
 	"time"
+	_ "time/tzdata"
 
 	"go.uber.org/zap"
 	"nexis.run/nexa/kit/logger"
@@ -14,28 +14,37 @@ import (
 
 // Boot 初始化项目
 // cfgPath 配置文件路径
-func Boot(cfgPath string) {
-	// 设置全局时区
-	tz := "Asia/Shanghai"
-	_ = os.Setenv("TZ", tz)
-	loc, _ := time.LoadLocation(tz)
-	time.Local = loc
+func Boot(cfgPath string) (err error) {
+	// 设置应用时区
+	time.Local, err = time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		return
+	}
 
 	// 加载配置
-	cfg, err := config.Load(cfgPath)
+	var cfg *config.Config
+
+	cfg, err = config.Load(cfgPath)
 	if err != nil {
-		log.Fatalf("配置加载失败: %v", err)
+		err = fmt.Errorf("配置加载失败：%w", err)
+		return
 	}
 
 	// 初始化日志
-	logger.Setup(cfg.Logger)
+	err = logger.Setup(cfg.Logger)
+	if err != nil {
+		return
+	}
 
 	// 注入依赖
 	di.C, err = di.Initialize(cfg)
 	if err != nil {
-		zap.L().Fatal("依赖注入失败", zap.Error(err))
+		err = fmt.Errorf("依赖注入失败：%w", err)
+		return
 	}
 
 	// 打印启动信息
-	zap.S().Infof("初始化完成, 当前版本号: %s", config.Version)
+	zap.L().Info("应用初始化完成", zap.String("version", config.Version))
+
+	return
 }

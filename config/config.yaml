@@ -4,15 +4,9 @@ environment: development
 logger:
   name: layout
   stdout: true
-  kafka:
-    topic: layout-demo-development
-    brokers:
-      - 10.10.10.200:32420
-      - 10.10.10.200:32421
-      - 10.10.10.200:32422
 
 grpc:
-  bind: :50051
+  bind: ':50051'
 
 http:
-  bind: :50050
+  bind: ':50050'

@@ -1,16 +1,18 @@
-FROM harbor.liasica.com/library/debian:latest
+FROM debian:bookworm-slim
 
-RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list.d/debian.sources && \
-    mkdir /app && \
-    apt update && apt install -y bash tzdata ca-certificates && \
-    rm -rf /etc/localtime && \
-    ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone && \
-    apt clean && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates tzdata && \
     rm -rf /var/lib/apt/lists/*
 
-COPY ./build/release/layout /app/
+ARG APP=layout
+ENV TZ=Asia/Shanghai
+
+COPY ./build/release/${APP} /app/server
+COPY ./config/config.yaml /app/config/config.yaml
 
 WORKDIR /app
 
-ENTRYPOINT ["/app/layout", "app", "--config", "/app/config/config.yaml"]
+USER 65532:65532
+
+ENTRYPOINT ["/app/server", "app"]
+CMD ["--config", "/app/config/config.yaml"]

@@ -4,10 +4,7 @@
 
 package assets
 
-import (
-	"embed"
-	_ "embed"
-)
+import "embed"
 
 var (
 	//go:embed templates/*

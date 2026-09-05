@@ -21,8 +21,9 @@ func App() (*cobra.Group, *cobra.Command) {
 		Short:             "启动服务端",
 		CompletionOptions: cobra.CompletionOptions{DisableDefaultCmd: true},
 		GroupID:           g.ID,
-		Run: func(_ *cobra.Command, _ []string) {
-			application.Run()
+		Args:              cobra.NoArgs,
+		RunE: func(command *cobra.Command, _ []string) error {
+			return application.Run(command.Context())
 		},
 	}
 

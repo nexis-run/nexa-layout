@@ -5,7 +5,7 @@ import (
 )
 
 // Version 编译期由 -ldflags 注入
-var Version string
+var Version = "dev"
 
 // Config 项目配置
 type Config struct {

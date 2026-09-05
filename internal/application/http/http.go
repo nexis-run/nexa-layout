@@ -1,24 +1,45 @@
 package http
 
 import (
+	"context"
+	"errors"
+	"net/http"
+	"time"
+
 	"github.com/labstack/echo/v4"
-	"go.uber.org/zap"
 	"nexis.run/nexa/kit/rest"
 
 	"nexis.run/nexa-layout/internal/application/http/router"
 )
 
-// Setup 初始化Rest服务
-func Setup(app, address string) *echo.Echo {
-	echoServer, ch := rest.Run(app, address, func(e *echo.Echo) {
-		router.Setup(e)
-	})
+// Server 实现应用的 HTTP 启动与关闭接口
+type Server struct {
+	echoServer *echo.Echo
+	address    string
+}
 
-	go func() {
-		if err := <-ch; err != nil {
-			zap.L().Fatal("rest服务启动失败", zap.Error(err))
-		}
-	}()
+func Setup(app, address string) *Server {
+	echoServer := rest.New(app, router.Setup)
+	echoServer.Server.ReadHeaderTimeout = 5 * time.Second
+	echoServer.Server.IdleTimeout = time.Minute
 
-	return echoServer
+	return &Server{echoServer: echoServer, address: address}
+}
+
+func (server *Server) Start(_ context.Context) error {
+	err := server.echoServer.Start(server.address)
+	if errors.Is(err, http.ErrServerClosed) {
+		return nil
+	}
+
+	return err
+}
+
+func (server *Server) Stop(ctx context.Context) error {
+	err := server.echoServer.Shutdown(ctx)
+	if err != nil {
+		return errors.Join(err, server.echoServer.Close())
+	}
+
+	return nil
 }

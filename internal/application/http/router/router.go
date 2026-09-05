@@ -27,7 +27,7 @@ func Setup(e *echo.Echo) {
 
 	// 全局中间件
 	e.Use(
-		rest.CORSMiddlware(
+		rest.CORSMiddleware(
 			rest.CORSWithAllowHeaders(
 				core.HeaderLayoutUserToken,
 			),
@@ -36,13 +36,6 @@ func Setup(e *echo.Echo) {
 
 		// 请求体 / 响应体 dump 日志
 		rest.DumpMiddleware(func(c echo.Context) bool {
-			contentType := c.Response().Header().Get("Content-Type")
-
-			// 跳过非 json 响应
-			if !strings.Contains(contentType, "application/json") {
-				return true
-			}
-
 			// 过滤掉不需要 dump 的路径
 			return strings.HasPrefix(c.Request().URL.Path, "/docs") ||
 				strings.HasPrefix(c.Request().URL.Path, "/healthz") ||
